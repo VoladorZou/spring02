@@ -37,6 +37,28 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public User checkOnPhone(String phone) {
+		// 根据接收的phoneNum查询数据库
+		User userDB = userMapper.checkOnPhone(phone);
+		if (userDB!=null) {
+			return userDB;
+		}
+		throw new RuntimeException("service——查询失败！数据库无此用户");
+	}
+
+	@Override
+	public Boolean setState(User user) {
+		Boolean flag = userMapper.setState(user);
+		if (flag==true) {
+			System.out.println("设置用户状态成功！");
+			return true;
+		}else {
+			System.out.println("userService——设置用户状态失败！");
+			return false;
+		}
+	}
+
+	@Override
 	public Boolean changePwd(User user) {
 		// TODO Auto-generated method stub
 		Boolean flag = userMapper.changePwd(user);

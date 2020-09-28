@@ -10,7 +10,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 
 public class JWTUtils {
 
-	private static final String SING = "123456";// 私钥
+	private static final String SING = "123456";// 私钥，通常会设置得很复杂。这里是学习练手，便没那么讲究
 
 	/**
 	 * 生成token header.payload.sing
@@ -33,6 +33,7 @@ public class JWTUtils {
 
 		String token = builder.withExpiresAt(instance.getTime())// 指定令牌过期时间
 				.sign(Algorithm.HMAC256(SING));// sign
+
 		return token;
 	}
 
@@ -41,6 +42,7 @@ public class JWTUtils {
 	 *
 	 */
 	public static DecodedJWT verify(String token) {
+
 		return JWT.require(Algorithm.HMAC256(SING)).build().verify(token);
 	}
 

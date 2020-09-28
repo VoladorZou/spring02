@@ -14,7 +14,9 @@ public class InterceptorConfig implements WebMvcConfigurer{
                 .addPathPatterns("/user/changePwd")         //需要token验证的其他接口
                 .addPathPatterns("/user/setPhone")
                 .addPathPatterns("/user/setPwd")
+                .addPathPatterns("/user/logout")
                 .addPathPatterns("/user/changePhone")
+                .excludePathPatterns("/user/resetPwd")
                 .excludePathPatterns("/user/sendVerifyCode")//放行发送验证码接口
                 .excludePathPatterns("/user/login");        //所有用户都放行登录接口
     }

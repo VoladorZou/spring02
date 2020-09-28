@@ -6,6 +6,7 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
+import com.example.demo.utils.CodeUtils;
 import com.google.gson.Gson;
 import java.util.Map;
 
@@ -33,9 +34,6 @@ public class SendSmsController {
      * 发送短信
      */
     public String sendSms(String phone, String code) throws ClientException {
-    	
-    	DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4GE6pdisroTWrWUkMCzA", "LjaFG9ZTHNnBkqvo8qJGgnElaY2LaZ");
-        IAcsClient client = new DefaultAcsClient(profile);
     	
         CommonRequest request = new CommonRequest();
         request.setSysDomain("dysmsapi.aliyuncs.com");
