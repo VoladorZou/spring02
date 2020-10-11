@@ -1,17 +1,17 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.User;
+import com.example.demo.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.entity.User;
-import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.UserService;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
-	
+
 	@Autowired
 	private UserMapper userMapper;
 
@@ -27,7 +27,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User check(int id) {
+	public User adminLogin(String pwd, String id) {
+		// 根据接收的账号、密码查询数据库
+		User userDB = userMapper.adminLogin(pwd,id);
+		if (userDB!=null) {
+			return userDB;
+		}
+		throw new RuntimeException("service——管理员登录失败！");
+	}
+
+	@Override
+	public User check(String id) {
 		// 根据接收的ID查询数据库
 		User userDB = userMapper.check(id);
 		if (userDB!=null) {
@@ -50,7 +60,7 @@ public class UserServiceImpl implements UserService {
 	public Boolean setState(User user) {
 		Boolean flag = userMapper.setState(user);
 		if (flag==true) {
-			System.out.println("设置用户状态成功！");
+			System.out.println("userService——设置用户状态成功！");
 			return true;
 		}else {
 			System.out.println("userService——设置用户状态失败！");
@@ -63,7 +73,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		Boolean flag = userMapper.changePwd(user);
 		if (flag==true) {
-			System.out.println("密码修改成功！");
+			System.out.println("userService——密码修改成功！");
 			return true;
 		}else {
 			System.out.println("userService——密码修改失败！");
@@ -76,7 +86,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		Boolean flag = userMapper.changePhone(user);
 		if (flag==true) {
-			System.out.println("手机号修改成功！");
+			System.out.println("userService——手机号修改成功！");
 			return true;
 		}else {
 			System.out.println("userService——手机号修改失败！");
@@ -88,7 +98,7 @@ public class UserServiceImpl implements UserService {
 	public Boolean setPwd(User user) {
 		Boolean flag = userMapper.setPwd(user);
 		if (flag==true) {
-			System.out.println("新密码设置成功！");
+			System.out.println("userService——新密码设置成功！");
 			return true;
 		}else {
 			System.out.println("userService——新密码设置失败！");
@@ -100,7 +110,7 @@ public class UserServiceImpl implements UserService {
 	public Boolean setPhone(User user) {
 		Boolean flag = userMapper.setPhone(user);
 		if (flag==true) {
-			System.out.println("登记手机号成功！");
+			System.out.println("userService——登记手机号成功！");
 			return true;
 		}else {
 			System.out.println("userService——登记手机号失败！");
@@ -109,4 +119,3 @@ public class UserServiceImpl implements UserService {
 	}
 
 }
- 

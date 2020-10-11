@@ -2,34 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.example.demo.entity.User">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="pwd" jdbcType="VARCHAR" property="pwd" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="department_id" jdbcType="INTEGER" property="departmentId" />
     <result column="state" jdbcType="BIT" property="state" />
+    <result column="administrators" jdbcType="BIT" property="administrators" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, pwd, real_name, phone, email, department_id, `state`
+    id, pwd, real_name, phone, email, department_id, `state`, administrators
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
 
   <select id="login" parameterType="com.example.demo.entity.User" resultType="com.example.demo.entity.User">
     select *
     from user
-    where id = #{id,jdbcType=INTEGER}  and pwd = #{pwd,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR} and pwd = #{pwd,jdbcType=VARCHAR}
   </select>
 
-  <select id="check" parameterType="java.lang.Integer" resultType="com.example.demo.entity.User">
+  <select id="adminLogin" parameterType="com.example.demo.entity.User" resultType="com.example.demo.entity.User">
     select *
     from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR} and pwd = #{pwd,jdbcType=VARCHAR}
+  </select>
+
+  <select id="check" parameterType="java.lang.String" resultType="com.example.demo.entity.User">
+    select *
+    from user
+    where id = #{id,jdbcType=VARCHAR}
   </select>
 
   <select id="checkOnPhone" parameterType="java.lang.String" resultType="com.example.demo.entity.User">
@@ -38,17 +45,17 @@
     where phone = #{phone,jdbcType=VARCHAR}
   </select>
 
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from user
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.example.demo.entity.User" useGeneratedKeys="true">
     insert into user (pwd, real_name, phone,
-      email, department_id, `state`
-      )
+      email, department_id, `state`,
+      administrators)
     values (#{pwd,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
-      #{email,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{state,jdbcType=BIT}
-      )
+      #{email,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{state,jdbcType=BIT},
+      #{administrators,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.example.demo.entity.User" useGeneratedKeys="true">
     insert into user
@@ -71,6 +78,9 @@
       <if test="state != null">
         `state`,
       </if>
+      <if test="administrators != null">
+        administrators,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="pwd != null">
@@ -90,6 +100,9 @@
       </if>
       <if test="state != null">
         #{state,jdbcType=BIT},
+      </if>
+      <if test="administrators != null">
+        #{administrators,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -114,39 +127,42 @@
       <if test="state != null">
         `state` = #{state,jdbcType=BIT},
       </if>
+      <if test="administrators != null">
+        administrators = #{administrators,jdbcType=BIT},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 
   <update id="changePwd" parameterType="com.example.demo.entity.User">
          update user
          set pwd = #{pwd,jdbcType=VARCHAR}
-         where id = #{id,jdbcType=INTEGER}
+         where id = #{id,jdbcType=VARCHAR}
   </update>
 
   <update id="changePhone" parameterType="com.example.demo.entity.User">
          update user
          set phone = #{phone,jdbcType=VARCHAR}
-         where id = #{id,jdbcType=INTEGER}
+         where id = #{id,jdbcType=VARCHAR}
   </update>
 
 
   <update id="setPwd" parameterType="com.example.demo.entity.User">
          update user
          set pwd = #{pwd,jdbcType=VARCHAR}
-         where id = #{id,jdbcType=INTEGER}
+         where id = #{id,jdbcType=VARCHAR}
   </update>
 
   <update id="setState" parameterType="com.example.demo.entity.User">
          update user
          set `state` = #{state,jdbcType=BIT}
-         where id = #{id,jdbcType=INTEGER} and pwd = #{pwd,jdbcType=VARCHAR}
+         where id = #{id,jdbcType=VARCHAR} and pwd = #{pwd,jdbcType=VARCHAR}
   </update>
 
   <update id="setPhone" parameterType="com.example.demo.entity.User">
          update user
          set phone = #{phone,jdbcType=VARCHAR}
-         where id = #{id,jdbcType=INTEGER}
+         where id = #{id,jdbcType=VARCHAR}
   </update>
 
 
@@ -157,7 +173,8 @@
       phone = #{phone,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
       department_id = #{departmentId,jdbcType=INTEGER},
-      `state` = #{state,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
+      `state` = #{state,jdbcType=BIT},
+      administrators = #{administrators,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

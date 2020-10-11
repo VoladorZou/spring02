@@ -7,17 +7,19 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface UserMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(String id);
 
     int insert(User record);
 
     int insertSelective(User record);
 
-    User selectByPrimaryKey(Integer id);
+    User selectByPrimaryKey(String id);
 
     User login(User user);//登录
 
-    User check(int id);//根据ID查询数据库
+    User adminLogin(String pwd, String id);//管理员登录
+
+    User check(String id);//根据ID查询数据库
 
     User checkOnPhone(String phone);//根据手机号查询数据库
 

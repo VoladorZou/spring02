@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.Set;
  
 public class CodeUtils {
-	
 	/**
      * 随机生成字符 或 者数字
      * @return
@@ -27,7 +26,6 @@ public class CodeUtils {
         }
         return value;
     }
- 
     /**
      * 随机生成字符串（包含字符和数字）
      * @param length 指定长度
@@ -46,7 +44,6 @@ public class CodeUtils {
         }
         return set;
     }
- 
     /**
      * 存放在set中的字符组拼接成字符串
      * @param set
@@ -61,7 +58,6 @@ public class CodeUtils {
         }
         return value;
        }
- 
     /**
      * 返回生成的随机字符串
      * @param length 指定随机字符串长度
@@ -80,6 +76,4 @@ public class CodeUtils {
             return value;
         }
     }
- 
-
 }
