@@ -1,2 +1,2 @@
 # spring02
-IDEA平台开发
+Springboot、Mybatis、JWT 登录模块
